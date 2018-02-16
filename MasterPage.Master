@@ -1,0 +1,248 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="Eshopper_Project.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <%--    <script>
+        function SetLocalStorageData(userID, firstName, isValidated) {
+            if (isValidated == "True") {
+                if (typeof (Storage) !== "undefined") {
+                    localStorage.setItem("lsUserID", userID);
+                    localStorage.setItem("lsFirstName", firstName);
+                    var name = localStorage.getItem("lsFirstName");
+                    $('#welcomeLabel').html("welcome," + name);
+                }
+            }
+        }
+        $(document).ready(function () {
+            $("#logoutuser").click(function () {
+                debugger;
+                localStorage.removeItem("lsUserID");
+                localStorage.removeItem("lsFirstName");
+            });
+        });
+    </script>--%>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    </asp:ContentPlaceHolder>
+
+</head>
+
+<body>
+
+    <form id="form1" runat="server">
+
+        <div>
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="container col-sm-7">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">
+                                <img src="images/logo.svg" class="size" style="margin-top: -10px;" /></a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                            <ul class="nav navbar-nav" style="padding-top: 7px;">
+                                <li><a href="home.aspx">HOME</a></li>
+                                <li class="dropdown" style="margin-top: -15px">
+                                    <asp:HyperLink ID="menDropdown" href="#" Text="MAN" runat="server" />
+                                    <ul class="dropdown-menu headerDropdownMenu">
+                                        <li><a href="#?category=men&subcategory=jeans" class="headerDropdownContent">Jeans</a></li>
+                                        <li><a href="#?category=men&subcategory=Shirt" class="headerDropdownContent">Shirt</a></li>
+                                        <li><a href="ProductDetail.aspx?category=men&subcategory=Tshirt" class="headerDropdownContent">Tshirt</a></li>
+                                        <li><a href="#?category=men&subcategory=Chinos" class="headerDropdownContent">Chinos</a></li>
+                                        <li><a href="#?category=men&subcategory=Blazers" class="headerDropdownContent">Blazers</a></li>
+                                        <li><a href="#?category=men&subcategory=Nightwear" class="headerDropdownContent">Nightwear</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <asp:HyperLink ID="womenDropdown" href="" Text="WOMEN" runat="server" /></li>
+                                <li>
+                                    <asp:HyperLink ID="kidsDropdown" href="" Text="KIDS" runat="server" /></li>
+                                <li>
+                                    <asp:HyperLink ID="accDropdown" href="" Text="ACCESSORIES" runat="server" /></li>
+                            </ul>
+                            <asp:DropDownList runat="server" ID="drpTheme" AutoPostBack="true" EnableViewState="true" OnSelectedIndexChanged="drpTheme_SelectedIndexChanged">
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="container col-sm-4">
+                        <ul class="nav" style="padding-top: 7px;">
+                            <li class="col-sm-3 col-xs-3">
+                                <label id="welcomeLabel" class="color_red" style="margin-top: 20px; text-align: center"></label>
+                            </li>
+                            <li class="col-sm-2 col-xs-2">
+                                <asp:HyperLink href="ProfilePage.aspx" ID="profileLink" class="color_red" runat="server" Text="Profile" Visible="false" />
+                            </li>
+                            <li class="col-sm-2 col-xs-2">
+                                <asp:LinkButton ID="logoutuser" runat="server" class="color_red" OnClick="logoutuser_Click" Visible="false">Logout</asp:LinkButton>
+                                <asp:LinkButton ID="loginUser" runat="server" class="color_red" data-toggle="modal" data-target="#myModal">Login</asp:LinkButton>
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title text-center" id="myModalLabel">eShopper login</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <p id="LoginPage" style="color: red"></p>
+                                                    <label for="Uname">UserNAme:</label>
+                                                    <asp:TextBox class="form-control" name="UserName" ID="loginuname" placeholder="Enter your username" runat="server" />
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorUserName" runat="server" ErrorMessage="UserName is required" ControlToValidate="loginuname" ValidationGroup="login"></asp:RequiredFieldValidator>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="pwd">Password:</label>
+                                                    <asp:TextBox TextMode="Password" class="form-control" name="Password" ID="loginpassword" placeholder="Enter your Password" runat="server" />
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorPassword" runat="server" ErrorMessage="Password is required" ControlToValidate="loginpassword" ValidationGroup="login"></asp:RequiredFieldValidator>
+                                                </div>
+                                                <asp:Button ID="btnLogin" class="btn btn-primary display-inline float_left" runat="server" Text="Login" OnClick="btnLogin_Click" ValidationGroup="login"></asp:Button>
+                                                <h6 class="text-right">Not a member?
+                                                <asp:HyperLink class="color_red" href="register.aspx" runat="server">Register</asp:HyperLink></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-sm-3 col-xs-3">
+                                <div class="dropdown">
+                                    <asp:HyperLink ID="hlBag" CssClass="sprite bag" runat="server"></asp:HyperLink>
+                                    <ul class="dropdown-menu dropdown-menu-right drop_cart">
+                                        <li style="padding-bottom: 10px;">Recently added items</li>
+                                        <li>
+
+                                            <asp:Repeater ID="rptCart" runat="server" OnItemCommand="rptCart_ItemCommand">
+                                                <ItemTemplate>
+                                                    <div class="row">
+                                                        <div class="col-xs-3">
+                                                            <img src="<%# Eval("ImageUrl") %>" style="height: 94px; width: 75px" />
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <asp:Label ID="lblProduct" class="items caption" runat="server" Text='<% #Eval("Name")%>' /></br>
+                                                            <asp:HiddenField ID="hdnTotal" runat="server" Value='<%#Eval("subtotal") %>' />
+                                                            <asp:HiddenField ID="hdnId" runat="server" Value='<%#Eval("ID") %>' />
+                                                            <asp:Label class="items caption" ID="lblPrice" runat="server" CssClass="color_red" Text='<% #Eval("Price")%>'></asp:Label><br />
+                                                            <%-- <asp:TextBox TextMode="Number" min="0" max="10" name="qty" ID="txtQty" Text="1" Style="width: 30px;" runat="server" /><br/>--%>
+                                                            <asp:Label ID="lblQty" runat="server" Text='<% #Eval("Qty")%>'></asp:Label><br />
+                                                            <asp:Label class="items caption" ID="lblSize" runat="server" CssClass="color_red" Text='<% #Eval("size")%>'></asp:Label>
+                                                        </div>
+                                                        <div class="col-xs-3">
+                                                            <asp:ImageButton ID="btnEdit" runat="server" ImageUrl="images/edit.png" CommandName="edit" />
+                                                            <asp:ImageButton ID="btnCross" runat="server" ImageUrl="images/cross.svg" class="svg_size" CommandName="delete" />
+                                                        </div>
+                                                    </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                            <div class="row">
+                                                <asp:Label ID="Label1" runat="server" Text="Cart Subtotal:"></asp:Label>
+                                                <asp:Label ID="lblTotal" runat="server" Text="" style="color:red"></asp:Label>
+                                            </div>
+
+                                        </li>
+                                        <li class="text-center">
+                                            <asp:Button ID="btnViewCart" runat="server" class="btn btn-primary text-center" Text="View Cart" OnClick="btnViewCart_Click"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-2 col-xs-2">
+                                <div class="top-bar">
+                                    <div class="search-container">
+                                        <input class="search glyphicon glyphicon-search" type="search" placeholder="" style="">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div runat="server" id="headerImage">
+                <div class="container-fluid">
+                    <div class="row banner">
+                        <img class="img-responsive margin-top image" src="images/inner-banner.jpg" />
+                        <div class="banner_text">
+                            <asp:Label ID="Headerlabel" Text="" runat="server" />
+                        </div>
+                    </div>
+                </div>
+
+                <nav aria-label="breadcrumb" class="breadcrumb_bgcolor">
+                    <ol class="breadcrumb container">
+                        <li class="breadcrumb-item"><a href="home.aspx" class="breadcrumb_color">Home</a></li>
+                        <li class="breadcrumb-item active" id="bCrumbActive"></li>
+                    </ol>
+                </nav>
+            </div>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+
+            <section class="footer_form">
+                <div class="email-text">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="form footer_text">
+                                Subscribe for Newsletter
+                        <asp:TextBox TextMode="Email" ID="newsletterEmail" class="input-email email-field" placeholder="Enter your email address" runat="server" />
+                                <asp:Button runat="server" ID="btnSignUp" Text="SIGN UP" class="sign_up"></asp:Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-sm-12">
+                                <ul class="list-inline">
+                                    <li>
+                                        <asp:HyperLink ID="hlHome" class="a-color" href="" runat="server" Text="Home" />
+                                    </li>
+                                    <li>
+                                        <asp:HyperLink ID="hlAboutUs" class="a-color" href="" runat="server" Text="About Us"></asp:HyperLink>
+                                    </li>
+                                    <li>
+                                        <asp:HyperLink ID="hlRegister" class="a-color" href="register.aspx" runat="server" Text="Register"></asp:HyperLink>
+                                    </li>
+                                    <li>
+                                        <asp:HyperLink ID="hlContactUs" class="a-color" href="contact.aspx" runat="server" Text="Contact Us"></asp:HyperLink>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <div class="copyright">
+                    <div class="container border">
+                        <div class="row text-center">
+                            <p>� 2017 eShopper online store. All rights reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </form>
+
+</body>
+</html>
